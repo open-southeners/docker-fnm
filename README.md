@@ -11,7 +11,7 @@ Imagine that you simply have a `.node-version` file with `14` on its content, so
 ### Standalone
 
 ```sh
-docker run -it --rm -v $PWD/myapp:/work d8vjork/fnm bash
+docker run --rm -v $PWD/myapp:/work d8vjork/fnm fnm --help
 ```
 
 ### Gitlab CI
