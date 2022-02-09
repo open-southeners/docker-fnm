@@ -16,4 +16,4 @@ RUN echo 'eval "$(fnm env --shell bash)"' >> /root/.bashrc
 RUN mkdir /work
 WORKDIR /work
 
-ENTRYPOINT [ "bash", "-c", "fnm", "use", "--log-level", "quiet;", "fnm", "--" ]
+ENTRYPOINT [ "bash", "-c", "fnm", "use", "--log-level", "quiet" ]
