@@ -1,19 +1,15 @@
-FROM alpine:3.15
+FROM ubuntu:latest
 
 RUN set -eux; \
-    apk add --no-cache bash; \
-    apk add --no-cache --virtual .fetch-deps curl
+    apt-get update; \
+    apt-get install curl unzip ca-certificates -y --no-install-recommends; \
+    rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
-
-RUN apk del --no-network .fetch-deps
-
-ENV PATH=/root/.fnm:$PATH
-RUN echo '' >> /root/.bashrc
-RUN echo '# fnm' >> /root/.bashrc
-RUN echo 'eval "$(fnm env --shell bash)"' >> /root/.bashrc
+ADD fnm-install.sh /tmp/
+RUN /tmp/fnm-install.sh
 
 RUN mkdir /work
 WORKDIR /work
 
-ENTRYPOINT [ "fnm", "--log-level", "quiet", "use" ]
+# After this you could run: `fnm --log-level quiet use --install-if-missing`
+CMD [ "eval", "'$(fnm env --shell bash)'" ]
